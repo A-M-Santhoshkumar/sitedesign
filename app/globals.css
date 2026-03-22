@@ -1,26 +1,435 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================
+   TAILWIND V4 THEME CONFIG
+========================= */
+@theme {
+  --font-openSans: 'OpenSans', sans-serif;
+  --font-syne: 'Syne', sans-serif;
+}
+
+/* =========================
+   ROOT VARIABLES (COLORS)
+========================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #03041C;
+  --color-secondary: #FA6490;
+  --color-dark: #0F172A;
+  --color-light: #B7B7BB;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================
+   DARK MODE
+========================= */
+.dark {
+  --color-dark: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =========================
+   FONTS
+========================= */
+.font-openSans {
+  font-family: 'OpenSans', sans-serif;
+}
+
+.font-openSansItalic {
+  font-family: 'OpenSansItalic', sans-serif;
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+
+
+/* =========================
+   Z-INDEX
+========================= */
+.z-9999 {
+  z-index: 9999;
+}
+
+/* =========================
+   TRANSLATE
+========================= */
+.translate-full {
+  transform: translateX(100%);
+}
+
+/* =========================
+   COLORS (TEXT)
+========================= */
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-dark { color: var(--color-dark); }
+.text-light { color: var(--color-light); }
+
+/* =========================
+   COLORS (BACKGROUND)
+========================= */
+.bg-primary { background-color: var(--color-primary); }
+.bg-secondary { background-color: var(--color-secondary); }
+.bg-dark { background-color: var(--color-dark); }
+.bg-light { background-color: var(--color-light); }
+
+/* =========================
+   HERO GRADIENT
+========================= */
+.bg-hero-gradient {
+  background: linear-gradient(
+    329deg,
+    #FF91FA 13.55%,
+    #FA6490 48.54%,
+    #F7D86A 86.44%
+  );
+}
+
+
+/* =========================
+   FONTS (LOCAL)
+========================= */
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OpenSansItalic';
+  src: url('/fonts/Open_Sans/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Syne';
+  src: url('/fonts/Syne/Syne-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+
+.font-openSans {
+  font-family: 'OpenSans', sans-serif;
+}
+
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+/* =========================
+   LAYOUT WRAPPER
+========================= */
+.layout-wrapper {
+  background-color: white;
+  color: var(--color-dark);
+}
+
+.dark .layout-wrapper {
+  background-color: #111;
+  color: white;
+}
+
+/* Section Box */
+.section-box {
+  background-color: var(--color-primary);
+  padding: 2rem;
+  border-radius: 12px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .section-box {
+    padding: 4rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.dark-section {
+  background-color: #1e2939 !important;
+}
+
+/* =========================
+   TOGGLE BUTTON DARK/LIGHT MODE
+========================= */
+.theme-sk-btn {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-sk-btn::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  background: linear-gradient(329deg, #FF91FA 13.55%, #FA6490 48.54%, #F7D86A 86.44%);
+  transform: translate(8px, 8px);
+  transition: transform 0.2s ease-out;
+  z-index: -1;
+}
+.theme-sk-btn::after {
+  filter: blur(6px);
+  opacity: 0.8;
+}
+
+.theme-sk-btn:hover::after {
+  transform: translate(0, 0);
+}
+
+.theme-sk-arrow {
+  transform: translateX(5px);
+  transition: transform 0.2s ease-out;
+}
+
+.theme-sk-btn:hover .theme-sk-arrow {
+  transform: translateX(8px);
+}
+
+/* HOVER TEXT EFFECT */
+.theme-sk {
+  position: relative;
+  display: inline-block;
+}
+
+.theme-sk-Hover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(15px);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 10;
+}
+
+.theme-sk:hover .theme-sk-Hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+@layer components {
+
+ 
+  /* BUTTON EFFECT */
+  .theme-sk-btn {
+    position: relative;
+    display: inline-block; 
+    overflow: hidden;
+  }
+
+  .theme-sk-btn::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    background: linear-gradient(329deg, #FF91FA, #FA6490, #F7D86A);
+    transform: translate(8px, 8px);
+    transition: transform 0.2s ease-out;
+    z-index: -1;
+  }
+
+  .theme-sk-btn:hover::after {
+    transform: translate(0, 0);
+  }
+
+  .theme-sk-arrow {
+    transform: translateX(5px);
+    transition: transform 0.2s ease-out;
+  }
+
+  .theme-sk-btn:hover .theme-sk-arrow {
+    transform: translateX(8px);
+  }
+
+  /* HOVER TEXT EFFECT */
+  .theme-sk {
+    position: relative;
+    display: inline-block;
+  }
+
+  .theme-sk-Hover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateY(15px);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 10;
+  }
+
+  .theme-sk:hover .theme-sk-Hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+@layer utilities {
+
+  /* Z INDEX */
+  .z-9999 {
+    z-index: 9999;
+  }
+
+  /* COLORS */
+  .text-primary { color: var(--color-primary); }
+  .text-secondary { color: var(--color-secondary); }
+  .text-dark { color: var(--color-dark); }
+  .text-light { color: var(--color-light); }
+
+  .bg-primary { background-color: var(--color-primary); }
+  .bg-secondary { background-color: var(--color-secondary); }
+  .bg-dark { background-color: var(--color-dark); }
+  .bg-light { background-color: var(--color-light); }
+
+  /* GRADIENT */
+  .bg-hero-gradient {
+    background: linear-gradient(329deg, #FF91FA, #FA6490, #F7D86A);
+  }
+
+  .before-hero-gradient::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    margin-right: 0.5rem;
+    background: linear-gradient(329deg, #FF91FA, #FA6490, #F7D86A);
+  }
+
+  /* CONTAINER */
+  .container-custom {
+    width: 100%;
+    margin: auto;
+    padding: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-custom {
+      padding: 2rem;
+    }
+  }
+
+  /* ANIMATIONS */
+  .animation-move {
+    transition: transform 0.2s ease-out;
+  }
+
+  .animation-bg-move {
+    transition: transform 0.2s ease-out;
+    background: linear-gradient(329deg, #FF91FA, #FA6490, #F7D86A);
+    border-radius: 0.5rem;
+  }
+
+  .group:hover .animation-move,
+  .group:hover .animation-bg-move {
+    transform: translateY(-20px);
+  }
+
+  /* FOOTER ICON */
+  .icons-fotter:hover {
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .dark .darkicons-fotter:hover {
+    background-color: white;
+    color: black;
+  }
+
+  /* CONTACT SHAPE */
+  .contact__shape-1 {
+    position: absolute;
+    left: 15%;
+    top: 12%;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: linear-gradient(
+      329deg,
+      rgba(255, 145, 250, 0.1),
+      rgba(250, 100, 144, 0.1),
+      rgba(247, 216, 106, 0.1)
+    );
+  }
+
+  /* IMAGE HOVER */
+  .hover-img {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hover-img:hover {
+    transform: scale(1.05);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   CONTAINER (FIXED)
+========================= */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;   /* ✅ FIX */
+  padding-right: 1.5rem;  /* ✅ FIX */
+}
+
+/* =========================
+   SECTION SPACING
+========================= */
+.section {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* =========================
+   INNER CONTENT WIDTH
+========================= */
+.section-inner {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================
+   DARK CARD SECTION (ABOUT)
+========================= */
+.section-box {
+  background-color: var(--color-primary);
+  padding: 2rem;
+  border-radius: 12px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .section-box {
+    padding: 4rem;
+  }
 }
