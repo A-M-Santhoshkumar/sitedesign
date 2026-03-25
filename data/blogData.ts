@@ -3,6 +3,7 @@ import { StaticImageData } from "next/image";
 import webDesignImg from "@/public/images/blog/web-design.jpg";
 import metaAdsImg from "@/public/images/blog/Meta-Ads.webp";
 import googleAdsImg from "@/public/images/blog/google-ads.png";
+import digitalmarketingguide from "@/public/images/blog/digitalmarketingguide.png";
 
 // ✅ TYPES
 export type BlogSection = {
@@ -169,9 +170,9 @@ export const blogData: Blog[] = [
     "seo guide 2026, digital marketing for beginners, business growth online, seo and marketing strategy",
 
   heroText:
-    "In today's competitive market, having a product is not enough. Businesses must be visible online. SEO and digital marketing help you reach the right audience and grow your business faster.",
+    "A complete playbook for business professionals — from startups finding their footing to established brands ready to dominate their market.",
 
-  image: webDesignImg, // you can change later
+  image: digitalmarketingguide, 
 
   sections: [
     {

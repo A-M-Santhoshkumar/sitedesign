@@ -172,6 +172,8 @@ function Section4() {
       </span>
     </>
   }
+  mainTitleClass=" text-center"
+  smallTitleClass=" text-center"
 />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { CgWebsite } from "react-icons/cg";
@@ -18,6 +19,7 @@ interface ProjectItem {
 
 function Section2() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const pathname = usePathname(); // ✅ detect route change
 
   const project: ProjectItem[] = [
     {
@@ -48,33 +50,43 @@ function Section2() {
 
     const initGSAP = async () => {
       const gsap = (await import("gsap")).default;
-      const ScrollTrigger = (await import("gsap/ScrollTrigger")).ScrollTrigger;
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
 
       gsap.registerPlugin(ScrollTrigger);
 
       if (!sectionRef.current) return;
 
+      // ✅ Kill old triggers before re-creating
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+
       ctx = gsap.context(() => {
-        gsap.from(".service-card", {
+        // ✅ Reset opacity/y before animating so it always plays fresh
+        gsap.set(".service-card", { opacity: 0, y: 60 });
+
+        gsap.to(".service-card", {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 85%",
+            once: true, // ✅ only trigger once per page visit
           },
-          opacity: 0,
-          y: 60,
+          opacity: 1,
+          y: 0,
           duration: 0.7,
           ease: "power3.out",
           stagger: 0.2,
         });
       }, sectionRef);
+
+      // ✅ Refresh after a tick so positions are recalculated
+      setTimeout(() => ScrollTrigger.refresh(), 100);
     };
 
     initGSAP();
 
     return () => {
-      if (ctx) ctx.revert(); // ✅ proper cleanup
+      if (ctx) ctx.revert();
     };
-  }, []);
+  }, [pathname]); // ✅ re-run on every route change
 
   return (
     <section className="dark:bg-[#111] py-12" ref={sectionRef}>
@@ -104,7 +116,7 @@ function Section2() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <item.icons className="text-3xl text-block  dark:text-white" />
+                  <item.icons className="text-3xl text-block dark:text-white" />
                 </div>
 
                 <p className="text-sm text-gray-500 dark:text-gray-400">

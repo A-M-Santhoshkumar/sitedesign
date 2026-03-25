@@ -13,22 +13,42 @@ function ThemeBtn({
   icon = true,
   isActive = true,
 }: ThemeBtnProps) {
-  const baseClass = `theme-sk-btn relative inline-flex items-center justify-center px-6 md:px-10 py-0 h-12
-  text-sm md:text-base leading-6 rounded-lg cursor-pointer select-none transition-all duration-200
-  ${
-    isActive
-      ? "active:bg-primary dark:bg-white dark:text-black text-white bg-primary border-2 border-primary"
-      : "text-gray-950 dark:bg-white dark:text-black bg-white border-2 border-white"
-  }`;
+
+  const baseClass = `
+    theme-sk-btn group relative inline-flex items-center justify-center gap-2
+    px-7 md:px-10 h-12 text-sm md:text-base font-medium rounded-full
+    bg-white text-gray-900 dark:bg-white dark:text-gray-900
+    cursor-pointer select-none overflow-hidden
+    transition-all duration-300 hover:shadow-lg active:scale-[0.98]
+  `.trim();
+
+  const Arrow = () => (
+    <span className="inline-flex items-center transition-transform duration-300 group-hover:translate-x-1">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M5 12h14M12 5l7 7-7 7" />
+      </svg>
+    </span>
+  );
 
   const content = (
     <>
-      {children}
-      {icon && (
-        <span className={`theme-sk-arrow ${isActive ? "text-white" : "text-gray-950"}`}>
-          →
-        </span>
+      {/* Colored dot — bottom-right corner, hides on hover */}
+      {isActive && (
+        <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-gradient-to-br from-pink-500 to-yellow-400 transition-opacity duration-300 group-hover:opacity-0" />
       )}
+
+      <span className="relative z-10">{children}</span>
+      {icon && <Arrow />}
     </>
   );
 

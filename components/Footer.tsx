@@ -5,7 +5,7 @@ import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
 
-// ✅ Types
+
 interface NavItem {
   id: number;
   title: string;
@@ -20,10 +20,11 @@ interface IconItem {
 
 function Footer() {
   const footerNav: NavItem[] = [
-    { id: 1, title: "Home", link: "/" },
+ { id: 1, title: "Home", link: "/" },
     { id: 2, title: "About", link: "/about" },
     { id: 3, title: "Projects", link: "/projects" },
-    { id: 4, title: "Contact", link: "/contact" },
+    { id: 4, title: "Service", link: "/service" },
+    { id: 5, title: "Contact", link: "/contact" },
   ];
 
   const icons: IconItem[] = [
@@ -35,7 +36,7 @@ function Footer() {
     {
       name: "Gmail",
       icon: BiLogoGmail,
-      link: "mailto:amsanthoshkumar2@gmail.com", // ✅ better than long URL
+      link: "mailto:amsanthoshkumar2@gmail.com", 
     },
     {
       name: "GitHub",
@@ -47,7 +48,7 @@ function Footer() {
   return (
     <footer className="layout-wrapper">
       
-      {/* Gradient Line */}
+  
       <div className="bottom-0 left-0 w-full h-0.5 hidden dark:block">
         <div
           className="w-full h-full"
@@ -60,13 +61,13 @@ function Footer() {
 
       <div className="container layout-wrapper bg-white border-t border-black">
         
-        {/* Top Section */}
+     
         <div className="flex flex-col md:flex-row justify-between items-center py-4">
           
-          {/* Logo */}
+      
           <div className="w-1/2 md:w-2/12">
             <Image
-              src="/images/logo-footer.png" // ✅ moved to public folder
+              src="/images/logo-footer.png"
               alt="logo"
               width={200}
               height={80}
@@ -74,7 +75,7 @@ function Footer() {
             />
           </div>
 
-          {/* Navigation */}
+          
           <ul className="text-center md:flex gap-4 py-4">
             {footerNav.map((item) => (
               <li key={item.id}>
@@ -86,14 +87,14 @@ function Footer() {
           </ul>
         </div>
 
-        {/* Bottom Section */}
+
         <div className="flex flex-col-reverse md:flex-row justify-between items-center">
           
           <p className="text-center">
             © {new Date().getFullYear()} Sitedesign. All Rights Reserved.
           </p>
 
-          {/* Icons */}
+        
           <div className="flex gap-3 py-4">
             {icons.map((item, index) => (
               <a

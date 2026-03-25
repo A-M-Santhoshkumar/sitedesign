@@ -42,6 +42,8 @@ export default function Blog() {
                   alt={blog.title}
                   width={500}
                   height={300}
+                  style={{ width: 'auto', height: 'auto' }}
+                  loading="eager"
                   className="w-full h-48 object-cover"
                 />
               </Link>
