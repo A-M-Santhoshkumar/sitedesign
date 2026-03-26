@@ -112,7 +112,7 @@ function Section6() {
       const contentType = res.headers.get("content-type") ?? "";
       if (!contentType.includes("application/json")) {
         throw new Error(
-          "Route not found. Make sure app/api/sendMail/route.ts exists."
+          "Route not found."
         );
       }
 
