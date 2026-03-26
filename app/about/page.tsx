@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import mainimage from "../../public/images/about/about-me.png";
 import ThemeBtn from "../../components/ThemeBtn";
 import Title from "../../components/Title";
 
@@ -112,7 +111,7 @@ export default function AboutPage() {
               <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-gradient-to-br from-pink-500/5 to-yellow-400/5">
                 <div className="h-1 w-full bg-gradient-to-r from-pink-500 to-yellow-400" />
                 <Image
-                  src={mainimage}
+                  src="/images/about/about-me.png"
                   alt="Santhoshkumar — Web Developer"
                   width={600}
                   height={600}

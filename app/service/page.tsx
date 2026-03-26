@@ -5,11 +5,6 @@ import Image, { StaticImageData } from "next/image";
 import { motion, useAnimation, Variants } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Title from "../../components/Title";
-// Images
-import img1 from "../../public/images/service/socialmedia.jpg";
-import img2 from "../../public/images/service/ads.jpg";
-import img3 from "../../public/images/service/web.jpg";
-import img4 from "../../public/images/service/domain.jpg";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -19,7 +14,7 @@ type ServiceSection = {
   tag: string;           // small label above title e.g. "01"
   title: string;
   subtitle: string;
-  image: StaticImageData;
+  image: string;
   accent: string;        // tailwind gradient class pair for accent line
   points: Point[];
   badges: string[];      // tool/tech badges
@@ -32,7 +27,7 @@ const services: ServiceSection[] = [
     tag: "01",
     title: "Social Media & SEO",
     subtitle: "Grow your brand visibility across every digital channel",
-    image: img1,
+    image: "/images/service/socialmedia.jpg",
     accent: "from-pink-500 to-rose-400",
     points: [
       { text: "Social media account management across Instagram, Facebook & LinkedIn" },
@@ -46,7 +41,7 @@ const services: ServiceSection[] = [
     tag: "02",
     title: "Ads & Campaigns",
     subtitle: "Performance-driven paid campaigns that convert",
-    image: img2,
+    image: "/images/service/ads.jpg",
     accent: "from-amber-400 to-orange-500",
     points: [
       { text: "Google Ads & Meta Ads setup, targeting and optimisation" },
@@ -60,7 +55,7 @@ const services: ServiceSection[] = [
     tag: "03",
     title: "Website Development",
     subtitle: "Beautiful, fast websites built on the right platform for you",
-    image: img3,
+    image: "/images/service/web.jpg",
     accent: "from-violet-500 to-purple-400",
     points: [
       { text: "WordPress — themes, plugins, WooCommerce and custom post types" },
@@ -74,7 +69,7 @@ const services: ServiceSection[] = [
     tag: "04",
     title: "Domain & Hosting",
     subtitle: "Reliable infrastructure so your site is always online",
-    image: img4,
+    image: "/images/service/domain.jpg",
     accent: "from-cyan-400 to-teal-500",
     points: [
       { text: "Domain registration and DNS management (GoDaddy, Namecheap)" },
@@ -149,10 +144,6 @@ function ServiceBlock({ s, idx }: { s: ServiceSection; idx: number }) {
           Service {s.tag}
         </span> */}
 
-     
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white leading-tight">
-        
-        </h2>
         <Title      
   mainTitle={
     <>
@@ -210,7 +201,7 @@ const stats = [
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default function About() {
+export default function ServicePage() {
   return (
     <div className="layout-wrapper bg-[#0a0a0a] text-white min-h-screen">
       <div className="container mx-auto px-4 py-20">

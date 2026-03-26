@@ -3,7 +3,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { ThemeProvider } from "../components/ThemeContext";
-import MouseDot from "@/components/MouseDot";
+import MouseDot from "../components/MouseDot";
 
 export const metadata: Metadata = {
   title: "SiteDesign | Web Design Coimbatore",
