@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, Variants } from "framer-motion";
 import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { BiLogoGmail } from "react-icons/bi";
@@ -22,7 +22,7 @@ const HeroSection: React.FC = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const { isDarkMode } = useTheme();
 
-  const animationVariants = {
+  const animationVariants: { [key: string]: Variants } = {
     fadeInLeft: {
       hidden: { opacity: 0, x: -50 },
       visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },

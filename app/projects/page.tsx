@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { projectsData } from "../../data/projects";
-import Title from "@/components/Title";
+import Title from "../../components/Title";
 
 function Projects() {
   return (
@@ -73,4 +73,3 @@ function Projects() {
 }
 
 export default Projects;
-

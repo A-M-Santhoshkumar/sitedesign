@@ -1,6 +1,7 @@
 // app/sitemap.ts
 
-import { blogData } from "@/data/blogData";
+export const dynamic = 'force-static';
+import { blogData } from "../data/blogData";
 
 export default function sitemap() {
   const baseUrl = "https://www.sitedesign.in";

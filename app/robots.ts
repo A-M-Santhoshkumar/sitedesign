@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://yourdomain.com/sitemap.xml",
+    sitemap: "https://testsanthosh-5upg-800xbkcqt.vercel.app/sitemap.xml",
   };
 }
