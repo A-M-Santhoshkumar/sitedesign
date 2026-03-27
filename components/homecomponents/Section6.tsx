@@ -183,8 +183,16 @@ function Section6() {
             <input name="city" placeholder="City" value={formData.city} onChange={handleChange} className={inputClass("city")} />
             <textarea name="message" placeholder="Message *" value={formData.message} onChange={handleChange} className={inputClass("message")} />
 
-            <button disabled={status === "loading"} className="bg-black text-white p-3 rounded">
-              {status === "loading" ? "Sending..." : "Send"}
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="py-3 px-4 rounded-md text-white font-bold
+                bg-[linear-gradient(329deg,#FF91FA,#FA6490,#F7D86A)]
+                hover:opacity-90 transition duration-300
+                shadow-[0_0_20px_rgba(250,100,144,0.6)]
+                disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {status === "loading" ? "Sending..." : "Get Free Quote"}
             </button>
           </form>
         </div>
