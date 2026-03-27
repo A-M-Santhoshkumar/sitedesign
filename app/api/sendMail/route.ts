@@ -3,9 +3,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY); // ✅ moved inside
+
   try {
     const body = await req.json();
     const { name, email, phone, city, message } = body as {
@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
       message: string;
     };
 
-    // ── Server-side validation ─────────────────────────────────────────────
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
 
@@ -32,9 +31,8 @@ export async function POST(req: NextRequest) {
     if (!message?.trim())
       return NextResponse.json({ message: "Message is required." }, { status: 400 });
 
-    // ── Resend ─────────────────────────────────────────────────────────────
     const { error } = await resend.emails.send({
-      from: "Contact Form <onboarding@resend.dev>", // ✅ works without domain verification
+      from: "Contact Form <onboarding@resend.dev>",
       to: "a.m.santhoshkumar02@gmail.com",
       replyTo: email,
       subject: `New Enquiry from ${name} — ${phone}`,
