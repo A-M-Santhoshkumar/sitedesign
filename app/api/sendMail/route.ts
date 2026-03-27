@@ -1,17 +1,16 @@
 // ✅ FILE PATH: app/api/sendMail/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
   try {
-    // Check if API key is configured
-    if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not configured");
+    // Check if email credentials are configured
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error("EMAIL_USER or EMAIL_PASS is not configured");
       return NextResponse.json({ message: "Email service not configured." }, { status: 500 });
     }
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await req.json();
     const { name, email, phone, city, message } = body as {
       name: string;
@@ -36,8 +35,18 @@ export async function POST(req: NextRequest) {
     if (!message?.trim())
       return NextResponse.json({ message: "Message is required." }, { status: 400 });
 
-    const { error } = await resend.emails.send({
-      from: "Contact Form <onboarding@resend.dev>",
+    // Create transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Send email
+    await transporter.sendMail({
+      from: `"Contact Form" <${process.env.EMAIL_USER}>`,
       to: "a.m.santhoshkumar02@gmail.com",
       replyTo: email,
       subject: `New Enquiry from ${name} — ${phone}`,
@@ -61,11 +70,6 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
-
-    if (error) {
-      console.error("Resend error:", error);
-      return NextResponse.json({ message: "Failed to send email." }, { status: 500 });
-    }
 
     return NextResponse.json({ message: "Email sent successfully!" }, { status: 200 });
 
