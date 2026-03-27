@@ -1,25 +1,22 @@
-// ✅ FILE PATH: app/api/sendMail/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
   try {
-    // Check if email credentials are configured
+    // ✅ Check ENV
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      console.error("EMAIL_USER or EMAIL_PASS is not configured");
-      return NextResponse.json({ message: "Email service not configured." }, { status: 500 });
+      console.error("❌ Missing EMAIL_USER or EMAIL_PASS");
+      return NextResponse.json(
+        { message: "Email service not configured." },
+        { status: 500 }
+      );
     }
 
+    // ✅ Parse body
     const body = await req.json();
-    const { name, email, phone, city, message } = body as {
-      name: string;
-      email: string;
-      phone: string;
-      city?: string;
-      message: string;
-    };
+    const { name, email, phone, city, message } = body;
 
+    // ✅ Validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
 
@@ -30,51 +27,54 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "Valid email is required." }, { status: 400 });
 
     if (!phone?.trim() || !phoneRegex.test(phone.replace(/\s/g, "")))
-      return NextResponse.json({ message: "Valid 10-digit phone number is required." }, { status: 400 });
+      return NextResponse.json(
+        { message: "Valid 10-digit phone number is required." },
+        { status: 400 }
+      );
 
     if (!message?.trim())
       return NextResponse.json({ message: "Message is required." }, { status: 400 });
 
-    // Create transporter
+    // ✅ Transporter (PRODUCTION SAFE)
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-    // Send email
+    // ✅ Send Mail
     await transporter.sendMail({
-      from: `"Contact Form" <${process.env.EMAIL_USER}>`,
-      to: "a.m.santhoshkumar02@gmail.com",
+      from: `"Website Contact" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER, // you receive mail
       replyTo: email,
-      subject: `New Enquiry from ${name} — ${phone}`,
+      subject: `New Enquiry from ${name}`,
       html: `
-        <div style="font-family:sans-serif;max-width:560px;margin:auto;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
-          <div style="background:linear-gradient(135deg,#ec4899,#facc15);padding:20px 24px;">
-            <h2 style="color:#fff;margin:0;font-size:18px;">New Contact Form Submission – Sitedesign</h2>
-          </div>
-          <div style="padding:24px;line-height:1.8;color:#111;">
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-            <p><strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>
-            <p><strong>City:</strong> ${city?.trim() || "Not provided"}</p>
-            <hr style="border:none;border-top:1px solid #e5e7eb;margin:16px 0;" />
-            <p><strong>Message:</strong></p>
-            <p style="white-space:pre-line;background:#f9fafb;padding:12px;border-radius:8px;">${message}</p>
-          </div>
-          <div style="background:#f3f4f6;padding:12px 24px;font-size:12px;color:#6b7280;">
-            Sent via your website contact form.
-          </div>
+        <div style="font-family:sans-serif;max-width:600px;margin:auto;">
+          <h2>New Contact Form Submission</h2>
+          <p><b>Name:</b> ${name}</p>
+          <p><b>Email:</b> ${email}</p>
+          <p><b>Phone:</b> ${phone}</p>
+          <p><b>City:</b> ${city || "Not provided"}</p>
+          <p><b>Message:</b></p>
+          <p>${message}</p>
         </div>
       `,
     });
 
-    return NextResponse.json({ message: "Email sent successfully!" }, { status: 200 });
+    return NextResponse.json(
+      { message: "Email sent successfully!" },
+      { status: 200 }
+    );
 
-  } catch (error) {
-    console.error("Server error:", error);
-    return NextResponse.json({ message: "Something went wrong." }, { status: 500 });
+  } catch (error: any) {
+    console.error("❌ Server Error:", error);
+    return NextResponse.json(
+      { message: error.message || "Something went wrong." },
+      { status: 500 }
+    );
   }
 }

@@ -103,11 +103,13 @@ function Section6() {
     setServerMessage("");
 
     try {
-      const res = await fetch("/api/sendMail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    const res = await fetch("/api/sendMail", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(formData),
+});
 
       const contentType = res.headers.get("content-type") ?? "";
       if (!contentType.includes("application/json")) {
