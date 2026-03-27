@@ -1,9 +1,9 @@
 // ✅ FILE PATH: app/api/sendMail/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-export const runtime = "nodejs"; // ← ADD THIS LINE
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,30 +20,21 @@ export async function POST(req: NextRequest) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/;
 
-    if (!name?.trim()) {
+    if (!name?.trim())
       return NextResponse.json({ message: "Name is required." }, { status: 400 });
-    }
-    if (!email?.trim() || !emailRegex.test(email)) {
+
+    if (!email?.trim() || !emailRegex.test(email))
       return NextResponse.json({ message: "Valid email is required." }, { status: 400 });
-    }
-    if (!phone?.trim() || !phoneRegex.test(phone.replace(/\s/g, ""))) {
+
+    if (!phone?.trim() || !phoneRegex.test(phone.replace(/\s/g, "")))
       return NextResponse.json({ message: "Valid 10-digit phone number is required." }, { status: 400 });
-    }
-    if (!message?.trim()) {
+
+    if (!message?.trim())
       return NextResponse.json({ message: "Message is required." }, { status: 400 });
-    }
 
-    // ── Nodemailer ─────────────────────────────────────────────────────────
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    await transporter.sendMail({
-      from: `"Contact Form" <${process.env.EMAIL_USER}>`,
+    // ── Resend ─────────────────────────────────────────────────────────────
+    const { error } = await resend.emails.send({
+      from: "Contact Form <onboarding@resend.dev>", // ✅ works without domain verification
       to: "a.m.santhoshkumar02@gmail.com",
       replyTo: email,
       subject: `New Enquiry from ${name} — ${phone}`,
@@ -68,13 +59,15 @@ export async function POST(req: NextRequest) {
       `,
     });
 
+    if (error) {
+      console.error("Resend error:", error);
+      return NextResponse.json({ message: "Failed to send email." }, { status: 500 });
+    }
+
     return NextResponse.json({ message: "Email sent successfully!" }, { status: 200 });
 
   } catch (error) {
-    console.error("Mail error:", error);
-    return NextResponse.json(
-      { message: "Failed to send email. Please try again." },
-      { status: 500 }
-    );
+    console.error("Server error:", error);
+    return NextResponse.json({ message: "Something went wrong." }, { status: 500 });
   }
 }
