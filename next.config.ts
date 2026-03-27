@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // ✅ Removed output: "export" — Vercel handles this natively
   images: {
-    unoptimized: true, // ✅ required for static export — Next.js image optimization needs a server
+    // unoptimized: true  ← no longer needed, Vercel optimizes images
   },
 };
 
