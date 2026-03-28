@@ -95,7 +95,7 @@ const HeroSection: React.FC = () => {
               mainTitle="Freelance Digital Marketer & Website Designer in Coimbatore"
               mainTag="h1"
               isWhite={isDarkMode}
-              mainTitleClass="text-xl md:text-2xl leading-tight"
+              mainTitleClass=" text-3xl md:text-4xl leading-tight"
             />
 
             <p className={`max-w-xl py-4 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
@@ -105,24 +105,6 @@ const HeroSection: React.FC = () => {
               customers and increase business leads.
             </p>
 
-            <div className="flex flex-col md:flex-row gap-3 py-6 items-center md:items-start">
-              <h5 className={isDarkMode ? "text-white" : "text-dark"}>Check out my:</h5>
-
-              <div className="flex gap-4">
-                {icons.map((item, index) => (
-                  <a key={index} href={item.link} target="_blank" rel="noopener noreferrer">
-                    <item.icon
-                      className={
-                        isDarkMode
-                          ? "text-white hover:scale-110 transition"
-                          : "text-primary hover:scale-110 transition"
-                      }
-                      size={24}
-                    />
-                  </a>
-                ))}
-              </div>
-            </div>
           </motion.div>
 
           {/* RIGHT */}

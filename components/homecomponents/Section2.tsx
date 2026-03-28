@@ -1,135 +1,111 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { useRef } from "react";
 import Link from "next/link";
 
 import { CgWebsite } from "react-icons/cg";
 import { TbWorldWww } from "react-icons/tb";
 import { RiSeoLine } from "react-icons/ri";
 
-// ✅ Type
 interface ProjectItem {
   name: string;
   link: string;
   icons: React.ComponentType<{ className?: string }>;
-  bgicon: string;
   projectCount: string;
 }
 
 function Section2() {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const pathname = usePathname(); // ✅ detect route change
-
   const project: ProjectItem[] = [
     {
       name: "Digital Marketing",
       link: "/projects",
       icons: CgWebsite,
-      bgicon: "/images/section3.webp",
       projectCount: "28 Project",
     },
     {
       name: "Website Design",
       link: "/projects",
       icons: TbWorldWww,
-      bgicon: "/images/section3.webp",
       projectCount: "17 Project",
     },
     {
       name: "Social Media Marketing",
       link: "/projects",
       icons: RiSeoLine,
-      bgicon: "/images/section3.webp",
       projectCount: "17 Project",
     },
   ];
 
-  useEffect(() => {
-    let ctx: any;
+  const handleMouseMove = (e: any, card: HTMLDivElement) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    const initGSAP = async () => {
-      const gsap = (await import("gsap")).default;
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+    // 🔥 Glow position
+    card.style.setProperty("--x", `${x}px`);
+    card.style.setProperty("--y", `${y}px`);
 
-      gsap.registerPlugin(ScrollTrigger);
+    // 🔥 3D Tilt
+    const rotateX = ((y / rect.height) - 0.5) * 12;
+    const rotateY = ((x / rect.width) - 0.5) * -12;
 
-      if (!sectionRef.current) return;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+  };
 
-      // ✅ Kill old triggers before re-creating
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-
-      ctx = gsap.context(() => {
-        // ✅ Reset opacity/y before animating so it always plays fresh
-        gsap.set(".service-card", { opacity: 0, y: 60 });
-
-        gsap.to(".service-card", {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 85%",
-            once: true, // ✅ only trigger once per page visit
-          },
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power3.out",
-          stagger: 0.2,
-        });
-      }, sectionRef);
-
-      // ✅ Refresh after a tick so positions are recalculated
-      setTimeout(() => ScrollTrigger.refresh(), 100);
-    };
-
-    initGSAP();
-
-    return () => {
-      if (ctx) ctx.revert();
-    };
-  }, [pathname]); // ✅ re-run on every route change
+  const handleMouseLeave = (card: HTMLDivElement) => {
+    card.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
+  };
 
   return (
-    <section className="dark:bg-[#111] py-12" ref={sectionRef}>
-      <div className="flex flex-col md:flex-row container justify-between gap-6">
+    <section className="dark:bg-[#111] py-16">
+      <div className="container mx-auto px-4 md:px-10 grid md:grid-cols-3 gap-8">
 
-        {project.map((item, index) => (
-          <div
-            key={index}
-            className="relative group w-full service-card"
-          >
-            {/* Background */}
-            <div className="absolute inset-0 animation-bg-move -z-10 rounded-lg"></div>
+        {project.map((item, index) => {
+          const Icon = item.icons;
 
-            <Link href={item.link}>
+          return (
+            <Link key={index} href={item.link}>
               <div
-                className="p-6 border border-gray-300 dark:border-white/10 
-                bg-white dark:bg-gray-800 backdrop-blur-md
-                rounded-xl transition duration-300 
-                hover:translate-x-2 hover:translate-y-2 hover:shadow-xl"
+                className="relative p-6 rounded-2xl bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10
+                transition-all duration-300 cursor-pointer will-change-transform group"
+                
+                onMouseMove={(e) => handleMouseMove(e, e.currentTarget)}
+                onMouseLeave={(e) => handleMouseLeave(e.currentTarget)}
               >
-                {/* Icon Box */}
+
+                {/* 🔥 Mouse Glow */}
                 <div
-                  className="w-14 h-14 flex items-center justify-center mb-4 rounded-lg"
+                  className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300"
                   style={{
-                    backgroundImage: `url(${item.bgicon})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
+                    background: `radial-gradient(300px circle at var(--x) var(--y), rgba(255, 0, 150, 0.15), transparent 40%)`,
                   }}
-                >
-                  <item.icons className="text-3xl text-block dark:text-white" />
+                />
+
+                {/* 🔥 Border Glow */}
+                <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-pink-500/30 transition" />
+
+                {/* Icon */}
+                <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-xl bg-gray-100 dark:bg-gray-800 
+                group-hover:scale-110 transition duration-300">
+                  <Icon className="text-3xl text-black dark:text-white" />
                 </div>
 
+                {/* Text */}
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {item.projectCount}
                 </p>
 
-                <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white mt-1">
                   {item.name}
                 </h2>
+
+                {/* 🔥 Micro interaction line */}
+                <div className="mt-4 h-[2px] w-0 bg-gradient-to-r from-pink-500 to-yellow-400 group-hover:w-full transition-all duration-500" />
+
               </div>
             </Link>
-          </div>
-        ))}
+          );
+        })}
 
       </div>
     </section>

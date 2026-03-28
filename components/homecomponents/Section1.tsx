@@ -18,7 +18,7 @@ function Section1() {
 
             <Title
               smallTitle="ABOUT ME"
-              mainTitle="Professional Digital Marketer & Full-Stack Web Developer"
+              mainTitle="Professional Digital Marketer &  Web Developer"
               smallTitleClass="mb-4"
               isWhite={true}
             />

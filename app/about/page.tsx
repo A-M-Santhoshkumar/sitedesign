@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeBtn from "../../components/ThemeBtn";
 import Title from "../../components/Title";
+ import { FiTarget, FiZap } from "react-icons/fi"; // clean minimal icons
+ import { FaGlobe, FaChartLine, FaBolt } from "react-icons/fa";
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+
 const stats = [
   { value: "50+", label: "Projects" },
   { value: "3+",  label: "Years" },
@@ -15,19 +17,19 @@ const stats = [
 
 const services = [
   {
-    icon: "🌐",
+    icon: <FaGlobe className="text-pink-500" />,
     title: "Website Development",
     desc: "Modern, responsive and fast websites — WordPress, Shopify, Next.js & React.",
     accent: "from-pink-500 to-rose-400",
   },
   {
-    icon: "📈",
+    icon: <FaChartLine className="text-orange-500" />,
     title: "Business Growth",
     desc: "Websites built to attract leads and convert visitors into real clients.",
     accent: "from-amber-400 to-orange-500",
   },
   {
-    icon: "⚡",
+    icon: <FaBolt className="text-purple-500" />,
     title: "Easy Digital Start",
     desc: "Simple, guided solutions for owners who are new to digital marketing.",
     accent: "from-violet-500 to-purple-400",
@@ -86,7 +88,7 @@ export default function AboutPage() {
               style={{ borderImage: "linear-gradient(to bottom, #ec4899, #facc15) 1" }}
             >
               <p className="text-yellow-500 dark:text-yellow-400 font-medium italic text-lg">
-                "I don't just build websites — I help businesses grow digitally."
+                "Built for visibility. Designed for growth"
               </p>
             </blockquote>
 
@@ -170,7 +172,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ══════════════════════ VISION & MISSION ══════════════════════════ */}
+  
       <section className="py-20 container mx-auto px-4 md:px-10">
 
         <div className="text-center mb-14 space-y-3">
@@ -188,30 +190,39 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
 
           {/* Vision */}
-          <div className="relative group p-8 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-            <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-pink-500 to-rose-400 rounded-l-2xl" />
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
-            <h3 className="text-xl font-bold text-pink-500 mb-3 flex items-center gap-2">
-              <span className="text-2xl">🎯</span> Vision
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              To empower every small and new business owner to succeed online — without confusion.
-              Making digital growth simple and accessible for everyone.
-            </p>
-          </div>
+       
 
-          {/* Mission */}
-          <div className="relative group p-8 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-            <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-yellow-400 to-orange-400 rounded-l-2xl" />
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-yellow-400/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
-            <h3 className="text-xl font-bold text-yellow-500 mb-3 flex items-center gap-2">
-              <span className="text-2xl">🚀</span> Mission
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              To create modern, fast, and user-friendly websites that help businesses attract customers,
-              build trust, and grow consistently in the digital world.
-            </p>
-          </div>
+{/* Vision */}
+<div className="relative group p-8 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
+  <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-pink-500 to-rose-400 rounded-l-2xl" />
+  <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
+
+  <h3 className="text-xl font-bold text-pink-500 mb-3 flex items-center gap-3">
+    <FiTarget className="text-2xl" />
+    Vision
+  </h3>
+
+  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+    To empower every small and new business owner to succeed online — without confusion.
+    Making digital growth simple and accessible for everyone.
+  </p>
+</div>
+
+{/* Mission */}
+<div className="relative group p-8 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
+  <div className="absolute top-0 left-0 h-full w-1 bg-gradient-to-b from-yellow-400 to-orange-400 rounded-l-2xl" />
+  <div className="absolute -top-10 -right-10 w-40 h-40 bg-yellow-400/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
+
+  <h3 className="text-xl font-bold text-yellow-500 mb-3 flex items-center gap-3">
+    <FiZap className="text-2xl" />
+    Mission
+  </h3>
+
+  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+    To create modern, fast, and user-friendly websites that help businesses attract customers,
+    build trust, and grow consistently in the digital world.
+  </p>
+</div>
 
         </div>
       </section>
@@ -241,7 +252,7 @@ export default function AboutPage() {
                 <div className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${s.accent}`} />
                 <div className={`absolute -inset-1 bg-gradient-to-br ${s.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl blur-xl`} />
                 <div className="relative space-y-3">
-                  <span className="text-4xl">{s.icon}</span>
+                  <span className="text-4xl align-middle flex justify-center mb-2">{s.icon}</span>
                   <h4 className="text-lg font-bold">{s.title}</h4>
                   <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{s.desc}</p>
                 </div>

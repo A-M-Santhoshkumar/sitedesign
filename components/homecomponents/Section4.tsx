@@ -1,125 +1,65 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
-import {
-  FaJs,
-  FaReact,
-  FaCss3Alt,
-  FaBootstrap,
-  FaElementor,
-  FaWordpress,
-  FaGithub,
-  FaShopify,
-} from "react-icons/fa";
-
-import { IoLogoHtml5 } from "react-icons/io";
-import {
-  RiTailwindCssFill,
-  RiVercelFill,
-  RiNodejsLine,
-} from "react-icons/ri";
-
-import { TbSeo, TbBrandRedux } from "react-icons/tb";
+import { SiGoogleads, SiMeta, SiSemrush, SiGoogleanalytics } from "react-icons/si";
+import { FaReact } from "react-icons/fa";
 import { GrDomain } from "react-icons/gr";
-
-import {
-  SiTypescript,
-  SiPhp,
-  SiMysql,
-  SiGodaddy,
-  SiMongodb,
-  SiGoogleads,
-  SiMeta,
-  SiGoogleanalytics,
-  SiGoogletagmanager,
-  SiGooglecampaignmanager360,
-  SiSemrush,
-} from "react-icons/si";
-
-import { DiPhotoshop } from "react-icons/di";
 
 import Title from "../Title";
 
-// ✅ TYPES
 interface IconItem {
-  icon: React.ComponentType<{ size?: number; style?: React.CSSProperties }>;
+  icon: React.ComponentType<{ size?: number; color?: string }>;
   color: string;
 }
 
 interface ServiceItem {
   skillName: string;
-  icons: IconItem[];
+  icon: IconItem;
   text: string;
 }
 
 function Section4() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const servicesRef = useRef<HTMLDivElement | null>(null);
+  const pathname = usePathname(); // 🔥 detect route change
 
   const project: ServiceItem[] = [
     {
-      skillName: "SEO Optimization",
-      icons: [
-        { icon: TbSeo, color: "#00A859" },
-        { icon: SiSemrush, color: "#f14e00" },
-        { icon: SiGoogleanalytics, color: "#eeb808" },
-        { icon: SiGoogletagmanager, color: "#087fee" },
-        { icon: SiGooglecampaignmanager360, color: "#002850e7" },
-      ],
-      text: "Advanced SEO services including keyword research, on-page optimization, and analytics tracking.",
+      skillName: "Google & Meta Ads",
+      icon: { icon: SiGoogleads, color: "#4285F4" },
+      text: "Run high-converting ad campaigns focused on ROI and quality lead generation.",
     },
     {
-      skillName: "Web Development",
-      icons: [
-        { icon: IoLogoHtml5, color: "#E34C26" },
-        { icon: FaCss3Alt, color: "#264de4" },
-        { icon: FaJs, color: "#F7DF1E" },
-        { icon: SiGodaddy, color: "#1bdbdb" },
-        { icon: GrDomain, color: "#6366F1" },
-      ],
-      text: "Professional Web Development services using HTML, CSS, and JavaScript.",
+      skillName: "SEO Optimization",
+      icon: { icon: SiSemrush, color: "#f14e00" },
+      text: "Rank higher on Google with keyword strategy, on-page SEO and local SEO.",
+    },
+    {
+      skillName: "Website Development",
+      icon: { icon: FaReact, color: "#61DBFB" },
+      text: "Fast, modern and conversion-focused websites built with React & Next.js.",
+    },
+    {
+      skillName: "Social Media Marketing",
+      icon: { icon: SiMeta, color: "#1877F2" },
+      text: "Grow your brand and generate leads through Instagram & Facebook campaigns.",
+    },
+    {
+      skillName: "Analytics & Tracking",
+      icon: { icon: SiGoogleanalytics, color: "#f9ab00" },
+      text: "Track performance with GA4 and optimize campaigns based on real data.",
     },
     {
       skillName: "Domain & Hosting",
-      icons: [
-        { icon: SiGodaddy, color: "#1bdbdb" },
-        { icon: GrDomain, color: "#6366F1" },
-        { icon: RiVercelFill, color: "#000" },
-        { icon: FaGithub, color: "#000" },
-      ],
-      text: "Complete domain and hosting setup including DNS configuration.",
-    },
-    {
-      skillName: "WordPress Development",
-      icons: [
-        { icon: FaWordpress, color: "#00749C" },
-        { icon: FaElementor, color: "#FF7BE5" },
-        { icon: FaShopify, color: "#95bf47" },
-      ],
-      text: "Custom WordPress websites using Elementor and modern tools.",
-    },
-    {
-      skillName: "Back-End Development",
-      icons: [
-        { icon: SiPhp, color: "#8892BF" },
-        { icon: SiMysql, color: "#00749C" },
-      ],
-      text: "Backend development using PHP and MySQL.",
-    },
-    {
-      skillName: "React JS Development",
-      icons: [
-        { icon: FaReact, color: "#61DBFB" },
-        { icon: RiTailwindCssFill, color: "#38bdf8" },
-        { icon: TbBrandRedux, color: "#764abc" },
-        { icon: SiTypescript, color: "#007acc" },
-      ],
-      text: "Modern front-end development using React and Tailwind.",
+      icon: { icon: GrDomain, color: "#6366F1" },
+      text: "Secure and fast hosting setup with zero downtime and full reliability.",
     },
   ];
 
   useEffect(() => {
+    let ctx: any;
+
     const loadGSAP = async () => {
       const gsapModule = await import("gsap");
       const scrollTriggerModule = await import("gsap/ScrollTrigger");
@@ -129,85 +69,105 @@ function Section4() {
 
       gsap.registerPlugin(ScrollTrigger);
 
-      if (!servicesRef.current) return;
+      // 🔥 Kill old triggers (important)
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
-      const ctx = gsap.context(() => {
+      ctx = gsap.context(() => {
         gsap.fromTo(
-          servicesRef.current,
-          { y: 100, opacity: 0 },
+          ".service-item",
+          { opacity: 0, x: -60 },
           {
-            y: 0,
             opacity: 1,
-            duration: 1,
-            ease: "power2.out",
+            x: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power3.out",
             scrollTrigger: {
-              trigger: servicesRef.current,
-              start: "top 80%",
+              trigger: containerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reset",
             },
           }
         );
       }, containerRef);
 
-      return () => ctx.revert();
+      // 🔥 Refresh after setup
+      ScrollTrigger.refresh();
     };
 
     loadGSAP();
-  }, []);
+
+    return () => {
+      if (ctx) ctx.revert(); // cleanup
+    };
+  }, [pathname]); // 🔥 re-run on navigation
 
   return (
-    <section ref={containerRef} className="container ">
-      
-      <div
-        ref={servicesRef}
-        className="w-full bg-white dark:bg-[#111] py-10 md:px-4"
-      >
+    <section ref={containerRef} className="container mx-auto px-4 md:px-10 py-20">
 
+      <Title
+        smallTitle="Services"
+        mainTitle={
+          <>
+            My{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400">
+              Expertise
+            </span>
+          </>
+        }
+        mainTitleClass="text-center"
+        smallTitleClass="text-center"
+      />
 
-             <Title  smallTitle="Services"
-  mainTitle={
-    <>
-      What I {" "}
-      <span className="text-black dark:bg-gradient-to-r dark:from-pink-500 dark:to-yellow-400 dark:bg-clip-text dark:text-transparent ">
-       Offer
-      </span>
-    </>
-  }
-  mainTitleClass=" text-center"
-  smallTitleClass=" text-center"
-/>
+      <p className="text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mt-3">
+        I provide complete digital solutions to help your business grow faster,
+        smarter, and more efficiently.
+      </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          {project.map((item, index) => (
-            <div
-              key={index}
-              className="group bg-white dark:bg-black p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-800 hover:scale-105 transition"
-            >
-              <h3 className="text-xl font-semibold mb-4 dark:text-white">
-                {item.skillName}
-              </h3>
+      {/* Timeline Layout */}
+      <div className="relative mt-16 max-w-4xl mx-auto">
 
-              <div className="flex flex-wrap gap-4">
-                {item.icons.map((iconItem, idx) => {
-                  const Icon = iconItem.icon;
+        {/* Vertical Line */}
+        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-pink-500 to-yellow-400" />
 
-                  return (
-                    <div
-                      key={idx}
-                      className="p-3 rounded-full bg-gray-100 dark:bg-gray-800 hover:scale-125 transition"
-                    >
-                      <Icon size={28} style={{ color: iconItem.color }} />
-                    </div>
-                  );
-                })}
+        <div className="space-y-10">
+          {project.map((item, index) => {
+            const Icon = item.icon.icon;
+
+            return (
+              <div
+                key={index}
+                className="service-item relative flex items-start gap-6 group"
+              >
+
+                {/* Icon */}
+                <div className="relative z-10 flex items-center justify-center w-12 h-12 rounded-full bg-white dark:bg-[#111] border border-gray-200 dark:border-white/10 shadow-md">
+                  <Icon size={20} color={item.icon.color} />
+                </div>
+
+                {/* Card */}
+                <div className="relative flex-1 p-6 rounded-2xl backdrop-blur-lg bg-white/70 dark:bg-white/5 border border-gray-200 dark:border-white/10 
+                group-hover:shadow-xl transition duration-300 group-hover:-translate-y-1">
+
+                  {/* Glow */}
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 
+                  bg-gradient-to-r from-pink-500/10 to-yellow-400/10 blur-xl" />
+
+                  <h3 className="text-lg font-semibold dark:text-white">
+                    {item.skillName}
+                  </h3>
+
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {item.text}
+                  </p>
+                </div>
+
               </div>
-
-              <p className="mt-4 text-gray-600 dark:text-gray-300 text-md">
-                {item.text}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
+
     </section>
   );
 }

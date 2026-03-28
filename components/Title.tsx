@@ -38,7 +38,7 @@ const Title: React.FC<TitleProps> = ({
       )}
 
       <MainTag
-        className={`dark:text-white text-2xl md:text-4xl font-bold font-syne leading-snug ${mainTitleClass} ${textColor}`}
+        className={`dark:text-white text-3xl md:text-4xl font-bold font-syne leading-snug ${mainTitleClass} ${textColor}`}
       >
         {mainTitle}
       </MainTag>

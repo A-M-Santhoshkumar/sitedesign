@@ -104,7 +104,7 @@ function Footer() {
                 rel="noopener noreferrer"
                 className="dark:bg-black bg-white p-3 icons-fotter-bg dark:darkicons-fotter-bg mt-1"
               >
-                <item.icon className="text-xl hover:text-white dark:hover:text-black transition" />
+                <item.icon className="text-xl hover:text-white dark:hover:text-white transition" />
               </a>
             ))}
           </div>

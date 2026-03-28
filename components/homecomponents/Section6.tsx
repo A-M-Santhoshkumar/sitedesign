@@ -66,6 +66,9 @@ function Section6() {
     type: "success",
   });
 
+  // ✅ Animation State
+  const [showLeft, setShowLeft] = useState(true);
+
   // ── Input class ──────────────────────────────────────────────────────
   const inputClass = (field: keyof FormDataType) =>
     [
@@ -156,22 +159,66 @@ function Section6() {
     <section className="layout-wrapper mx-auto py-6 px-4 md:py-10">
       <div className="container flex flex-col md:flex-row gap-10">
 
-        {/* LEFT */}
-        <div className="w-full md:w-1/2 space-y-6">
-          <Title smallTitle="Contact Us" mainTitle="Get in touch" />
+ <div className="w-full md:w-1/2 space-y-6 font-sans">
 
-          <a href="tel:9629140160" className="flex items-center gap-3">
-            <PiPhoneCallFill /> 9629140160
-          </a>
+  <Title smallTitle="Contact Us" mainTitle="Get in touch" />
 
-          <a href="https://wa.me/919629140160" target="_blank">
-            <FaWhatsapp /> WhatsApp
-          </a>
+  {/* Phone */}
+  <a
+    href="tel:9629140160"
+    className={`group flex items-center gap-4 p-4 rounded-lg
+    border-l-4 border-blue-500 bg-white/70 backdrop-blur-md
+    hover:bg-blue-50 transition-all duration-500
+    ${showLeft ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"}`}
+    style={{ transitionDelay: "0ms" }}
+  >
+    <div className="p-2 rounded-full bg-blue-100 group-hover:scale-110 transition">
+      <PiPhoneCallFill className="text-blue-600 text-xl" />
+    </div>
+    <div>
+      <p className="text-xs text-gray-500">Call us</p>
+      <p className="text-gray-800 font-medium">9629140160</p>
+    </div>
+  </a>
 
-          <a href="mailto:amsanthoshkumar2@gmail.com">
-            <IoMail /> Email
-          </a>
-        </div>
+  {/* WhatsApp */}
+  <a
+    href="https://wa.me/919629140160"
+    target="_blank"
+    className={`group flex items-center gap-4 p-4 rounded-lg
+    border-l-4 border-green-500 bg-white/70 backdrop-blur-md
+    hover:bg-green-50 transition-all duration-500
+    ${showLeft ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"}`}
+    style={{ transitionDelay: "150ms" }}
+  >
+    <div className="p-2 rounded-full bg-green-100 group-hover:scale-110 transition">
+      <FaWhatsapp className="text-green-600 text-xl" />
+    </div>
+    <div>
+      <p className="text-xs text-gray-500">Chat with us</p>
+      <p className="text-gray-800 font-medium">WhatsApp</p>
+    </div>
+  </a>
+
+  {/* Email */}
+  <a
+    href="mailto:amsanthoshkumar2@gmail.com"
+    className={`group flex items-center gap-4 p-4 rounded-lg
+    border-l-4 border-purple-500 bg-white/70 backdrop-blur-md
+    hover:bg-purple-50 transition-all duration-500
+    ${showLeft ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-5"}`}
+    style={{ transitionDelay: "300ms" }}
+  >
+    <div className="p-2 rounded-full bg-purple-100 group-hover:scale-110 transition">
+      <IoMail className="text-purple-600 text-xl" />
+    </div>
+    <div>
+      <p className="text-xs text-gray-500">Mail us</p>
+      <p className="text-gray-800 font-medium">Email</p>
+    </div>
+  </a>
+
+</div>
 
         {/* RIGHT FORM */}
         <div className="w-full md:w-1/2">
