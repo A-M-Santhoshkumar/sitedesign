@@ -1,5 +1,4 @@
-"use client";
-
+  
 import Image from "next/image";
 import Link from "next/link";
 import ThemeBtn from "../../components/ThemeBtn";
@@ -7,6 +6,17 @@ import Title from "../../components/Title";
  import { FiTarget, FiZap } from "react-icons/fi"; // clean minimal icons
  import { FaGlobe, FaChartLine, FaBolt } from "react-icons/fa";
 
+ import { pageMeta } from "@/data/pageMeta";
+
+export const metadata = {
+  title: pageMeta.about.title,
+  description: pageMeta.about.description,
+  keywords: pageMeta.about.keywords,
+
+  alternates: {
+    canonical: pageMeta.about.url,
+  },
+};
 
 const stats = [
   { value: "50+", label: "Projects" },

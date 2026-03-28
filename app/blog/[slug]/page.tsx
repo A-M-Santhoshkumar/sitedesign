@@ -21,47 +21,56 @@ export async function generateMetadata({ params }: Props) {
   const image =
     typeof blog.image === "object" ? blog.image.src : blog.image;
 
-  return {
+return {
+  title: blog.title,
+  description: blog.description,
+  keywords: blog.keywords,
+
+  authors: [{ name: "Santhosh Kumar" }],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  category: "Digital Marketing",
+
+  alternates: {
+    canonical: url,
+  },
+
+  openGraph: {
     title: blog.title,
     description: blog.description,
-    keywords: blog.keywords,
+    url,
+    siteName: "SiteDesign",
+    type: "article",
+    images: [
+      {
+        url: image,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 
-    alternates: {
-      canonical: url,
-    },
-
-    openGraph: {
-      title: blog.title,
-      description: blog.description,
-      url,
-      siteName: "SiteDesign",
-      type: "article",
-      images: [
-        {
-          url: image,
-          width: 1200,
-          height: 630,
-        },
-      ],
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title: blog.title,
-      description: blog.description,
-      images: [image],
-    },
-  };
+  twitter: {
+    card: "summary_large_image",
+    title: blog.title,
+    description: blog.description,
+    images: [image],
+  },
+};
 }
 
-// ✅ 2. STATIC PATHS (SEO BOOST)
+
 export async function generateStaticParams() {
   return blogData.map((blog) => ({
     slug: blog.slug,
   }));
 }
 
-// ✅ 3. PAGE
+
 export default async function BlogPage({ params }: Props) {
   const { slug } = await params;
   const blog = blogData.find((item) => item.slug === slug);
@@ -76,7 +85,7 @@ export default async function BlogPage({ params }: Props) {
     <article className="bg-white dark:bg-black py-12">
       <div className="max-w-4xl mx-auto px-4">
 
-        {/* 🔥 JSON-LD SCHEMA (CORRECT WAY) */}
+    
         <script
           type="application/ld+json"
           suppressHydrationWarning
@@ -87,6 +96,8 @@ export default async function BlogPage({ params }: Props) {
               headline: blog.title,
               description: blog.description,
               image: image,
+              datePublished: "2026-03-28",
+              dateModified: "2026-03-28",
               author: {
                 "@type": "Person",
                 name: "Santhosh Kumar",
@@ -103,21 +114,31 @@ export default async function BlogPage({ params }: Props) {
                 "@type": "WebPage",
                 "@id": url,
               },
+
+              
+              mainEntity: blog.faq.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: item.answer,
+                },
+              })),
             }),
           }}
         />
 
-        {/* TITLE */}
+     
         <h1 className="text-3xl md:text-5xl font-bold mb-6 dark:text-white">
           {blog.title}
         </h1>
 
-        {/* INTRO */}
+    
         <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
           {blog.heroText}
         </p>
 
-        {/* IMAGE */}
+       
         <Image
           src={image}
           alt={blog.title}
@@ -127,7 +148,7 @@ export default async function BlogPage({ params }: Props) {
           priority
         />
 
-        {/* CONTENT */}
+     
         <div className="space-y-10">
           {blog.sections.map((section, index) => (
             <div key={index}>
@@ -142,7 +163,7 @@ export default async function BlogPage({ params }: Props) {
           ))}
         </div>
 
-        {/* FAQ */}
+     
         <div className="mt-16">
           <h2 className="text-2xl font-bold mb-6 dark:text-white">
             Frequently Asked Questions
