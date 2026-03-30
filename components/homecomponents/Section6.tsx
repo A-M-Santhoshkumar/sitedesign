@@ -249,7 +249,19 @@ export default function Section6() {
 
           {/* LEFT */}
           <div className="w-full md:w-1/2 space-y-6 font-sans">
-            <Title smallTitle="Contact Us" mainTitle="Get in touch" />
+  
+        
+          <Title  smallTitle="Contact Us"
+            mainTitle={
+              <>
+                Get in {" "}
+                <span className="text-black dark:bg-gradient-to-r dark:from-pink-500 dark:to-yellow-400 dark:bg-clip-text dark:text-transparent">
+                  Touch
+                </span>
+              </>
+            }
+          />
+
 
             <a href="tel:9629140160"
               className="group flex items-center gap-4 p-4 rounded-lg border-l-4 border-blue-500
