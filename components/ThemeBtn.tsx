@@ -17,7 +17,7 @@ function ThemeBtn({
   const baseClass = `
     theme-sk-btn group relative inline-flex items-center justify-center gap-2
     px-7 md:px-10 h-12 text-sm md:text-base font-medium rounded-full
-    bg-white text-white dark:bg-white dark:text-gray-900
+    bg-white text-gray dark:bg-white dark:text-gray-900
     cursor-pointer select-none overflow-hidden
     transition-all duration-300 hover:shadow-lg active:scale-[0.98]
   `.trim();
