@@ -157,23 +157,7 @@ function ThankYouModal({ name, onClose }: { name: string; onClose: () => void })
               <span className="font-bold text-gray-800">within 24 hours</span>.
             </p>
 
-            <p className="text-gray-500 text-sm max-w-xs">
-              Need a faster reply? Reach us directly on WhatsApp!
-            </p>
-
-            {/* WhatsApp button */}
-            <a
-              href="https://wa.me/917845002502"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm
-                text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-green-200"
-              style={{ background: "#25D366" }}
-            >
-              <FaWhatsapp className="text-xl" />
-              Chat on WhatsApp · 7845002502
-            </a>
-
+          
             {/* Divider line */}
             <div
               className="h-px w-20 rounded-full"
