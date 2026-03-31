@@ -1,5 +1,3 @@
-// app/sitemap.ts
-
 export const dynamic = 'force-static';
 import { blogData } from "../data/blogData";
 
@@ -21,7 +19,7 @@ export default function sitemap() {
 
   const blogUrls = blogData.map((blog) => ({
     url: `${baseUrl}/blog/${blog.slug}`,
-    lastModified: new Date(),
+    lastModified: new Date(blog.publishedAt), // ✅ works now
   }));
 
   return [...staticUrls, ...blogUrls];

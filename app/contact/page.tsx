@@ -1,6 +1,8 @@
 
 import Contact from "../../components/homecomponents/Section6";
 import { pageMeta } from "@/data/pageMeta";
+import JsonLd from "../../components/JsonLd";
+import { schemas } from "@/data/schemaData";
 
 export const metadata = {
   title: pageMeta.contact.title,
@@ -14,6 +16,8 @@ export const metadata = {
 function ContactPage() {
     return(
         <div>
+          <JsonLd data={schemas.contact} />  
+
             <Contact />
         </div>
     )

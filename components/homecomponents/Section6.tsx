@@ -271,7 +271,7 @@ export default function Section6() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Call us</p>
-                <p className="text-gray-800 font-medium">9629140160</p>
+                <p className="text-gray-800 font-medium">+91 7845002502</p>
               </div>
             </a>
 
@@ -283,11 +283,11 @@ export default function Section6() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Chat with us</p>
-                <p className="text-gray-800 font-medium">WhatsApp · 7845002502</p>
+                <p className="text-gray-800 font-medium">WhatsApp · +91 7845002502</p>
               </div>
             </a>
 
-            <a href="mailto:a.m.santhoshkumarofficial@gmail.com"
+            <a href="mailto:sitedesign.in@gmail.com"
               className="group flex items-center gap-4 p-4 rounded-lg border-l-4 border-purple-500
                 bg-white/70 backdrop-blur-md hover:bg-purple-50 transition-all duration-500">
               <div className="p-2 rounded-full bg-purple-100 group-hover:scale-110 transition">
@@ -295,7 +295,7 @@ export default function Section6() {
               </div>
               <div>
                 <p className="text-xs text-gray-500">Mail us</p>
-                <p className="text-gray-800 font-medium">a.m.santhoshkumarofficial@gmail.com</p>
+                <p className="text-gray-800 font-small">sitedesign.in@gmail.com</p>
               </div>
             </a>
           </div>

@@ -6,9 +6,11 @@ import { ThemeProvider } from "../components/ThemeContext";
 import MouseDot from "../components/MouseDot";
 
 export const metadata: Metadata = {
-  title: "SiteDesign | Web Design Coimbatore",
-  description:
-    "Professional website design, Google Ads & Meta Ads services in Coimbatore.",
+  title: {
+    default: "SiteDesign | Web Design Coimbatore",
+    template: "%s | SiteDesign", // ← About page becomes "About | SiteDesign"
+  },
+  description: "Professional website design, Google Ads & Meta Ads services in Coimbatore.",
 };
 
 export default function RootLayout({

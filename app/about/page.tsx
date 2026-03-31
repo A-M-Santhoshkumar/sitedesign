@@ -7,6 +7,9 @@ import Title from "../../components/Title";
  import { FaGlobe, FaChartLine, FaBolt } from "react-icons/fa";
 
  import { pageMeta } from "@/data/pageMeta";
+import JsonLd from "../../components/JsonLd";
+import { schemas } from "@/data/schemaData";
+
 
 export const metadata = {
   title: pageMeta.about.title,
@@ -56,7 +59,10 @@ const problems = [
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function AboutPage() {
   return (
-    <div className="layout-wrapper bg-white dark:bg-[#080808] text-black dark:text-white overflow-hidden">
+   <div>
+    <JsonLd data={schemas.about} />    
+
+     <div className="layout-wrapper bg-white dark:bg-[#080808] text-black dark:text-white overflow-hidden">
 
       {/* ══════════════════════════════ HERO ══════════════════════════════ */}
       <section className="relative container mx-auto py-24 px-4 md:px-10">
@@ -309,5 +315,6 @@ export default function AboutPage() {
       </section>
 
     </div>
+   </div>
   );
 }

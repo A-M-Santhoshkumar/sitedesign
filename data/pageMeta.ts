@@ -36,7 +36,7 @@ export const pageMeta = {
 
   service: {
     title:
-      "Digital Marketing Services in Coimbatore | SEO, Ads & Web Design",
+      "Digital Marketing Services in Coimbatore | Digital Marketing In Coimbatore​",
     description:
       "Professional digital marketing services in Coimbatore including SEO, Google Ads, Meta Ads and website design to grow your business.",
     keywords: [
