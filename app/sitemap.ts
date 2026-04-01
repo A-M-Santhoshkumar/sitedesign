@@ -10,6 +10,7 @@ export default function sitemap() {
     "/projects",
     "/contact",
     "/blog",
+    "/service",
   ];
 
   const staticUrls = staticPages.map((path) => ({
